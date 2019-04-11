@@ -28,6 +28,15 @@ public class MainMenu {
         return optionsListAsText.toString().trim();
     }
 
+    public void processInput(String userInput) {
+        while(!isValidInput(userInput)) {
+            Console.output("Please select a valid option!");
+            userInput = Console.getUserInput();
+        }
+
+        BibliotecaApp.currentState = optionsList.get(Integer.valueOf(userInput) - 1);
+    }
+
     public boolean isValidInput(String input) {
         try {
             if (Integer.parseInt(input) > optionsList.size()) {
@@ -39,14 +48,5 @@ public class MainMenu {
         }
 
         return true;
-    }
-
-    public void processInput(String userInput) {
-        while(!isValidInput(userInput)) {
-            Console.output("Please select a valid option!");
-            userInput = Console.getUserInput();
-        }
-
-        BibliotecaApp.currentState = optionsList.get(Integer.valueOf(userInput) - 1);
     }
 }

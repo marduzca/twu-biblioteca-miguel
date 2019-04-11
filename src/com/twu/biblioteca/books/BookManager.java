@@ -6,32 +6,36 @@ import java.util.List;
 public class BookManager {
 
     public static List<Book> bookList = new ArrayList<>();
+    public static List<Book> availableBooks;
 
     public BookManager(){
         bookList.add(new Book(101, "Sherlock Holmes", "Arthur Conan Doyle", 1887));
         bookList.add(new Book(102,"Ready Player One", "Ernest Cline", 2011));
         bookList.add(new Book(103,"Strange Case of Dr Jekyll and Mr Hyde", "Robert Louis Stevenson", 1886));
+
+        availableBooks = new ArrayList<>(bookList);
     }
 
     public String showListOfBooks() {
-        StringBuffer bookListAsText = new StringBuffer();
+        updateAvailableBooksList();
 
-        for(int i = 0; i < bookList.size(); i++) {
-            if(bookList.get(i).isAvailable())
-                bookListAsText.append((101 + i) + ". " + bookList.get(i).getTitle() + "\n");
-        }
-
-        return bookListAsText.toString().trim();
-    }
-
-    public String showListOfBooksWithExtraInfo() {
         StringBuffer bookListWithExtraInfoAsText = new StringBuffer();
 
-        for(int i = 0; i < bookList.size(); i++) {
-            if(bookList.get(i).isAvailable())
-                bookListWithExtraInfoAsText.append((101 + i) + ". " + bookList.get(i).getTitle() + " | " + bookList.get(i).getAuthor() + " | " + bookList.get(i).getYear() + "\n");
+        for(int i = 0; i < availableBooks.size(); i++) {
+            bookListWithExtraInfoAsText.append((i+1) + ". " + availableBooks.get(i).getTitle() + " | " + availableBooks.get(i).getAuthor() + " | " + availableBooks.get(i).getYear() + "\n");
         }
 
         return bookListWithExtraInfoAsText.toString().trim();
+    }
+
+    private void updateAvailableBooksList() {
+        for(Book b : bookList) {
+            if(!b.isAvailable() && availableBooks.contains(b)) {
+                availableBooks.remove(b);
+            }
+            else if(b.isAvailable() && !availableBooks.contains(b)) {
+                availableBooks.add(b);
+            }
+        }
     }
 }

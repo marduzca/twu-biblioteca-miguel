@@ -8,7 +8,7 @@ public class Console {
 
 
     public static void output(String output) {
-        System.out.println(output);
+        System.out.println("\n" + output);
     }
 
     public static String getUserInput() {

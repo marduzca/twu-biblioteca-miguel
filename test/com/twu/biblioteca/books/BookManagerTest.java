@@ -15,13 +15,8 @@ public class BookManagerTest {
     }
 
     @Test
-    public void showListOfBookTitlesTest() {
-        assertEquals("1. Sherlock Holmes\n2. Ready Player One\n3. Strange Case of Dr Jekyll and Mr Hyde", bookManager.showListOfBooks());
-    }
-
-    @Test
     public void showListOfBooksWithExtraInfoTest() {
-        assertEquals("1. Sherlock Holmes | Arthur Conan Doyle | 1887\n2. Ready Player One | Ernest Cline | 2011\n3. Strange Case of Dr Jekyll and Mr Hyde | Robert Louis Stevenson | 1886", bookManager.showListOfBooksWithExtraInfo());
+        assertEquals("1. Sherlock Holmes | Arthur Conan Doyle | 1887\n2. Ready Player One | Ernest Cline | 2011\n3. Strange Case of Dr Jekyll and Mr Hyde | Robert Louis Stevenson | 1886", bookManager.showListOfBooks());
     }
 
 }

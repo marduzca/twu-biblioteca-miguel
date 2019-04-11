@@ -1,5 +1,7 @@
 package com.twu.biblioteca.menu;
 
+import com.twu.biblioteca.main.BibliotecaApp;
+import com.twu.biblioteca.util.AppState;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,16 +17,50 @@ public class MainMenuTest {
     }
 
     @Test
-    public void showMainMenuOptions() {
-        assertEquals("1. List of bookList", menu.showMainMenu());
+    public void processInput_shouldGoToRentMenu_WhenInputIs1() {
+        menu.processInput("1");
+        assertEquals(AppState.BOOK_MENU, BibliotecaApp.currentState);
     }
 
     @Test
-    public void isValidInputTest() {
-        String input = "1";
-        assertEquals(true, menu.isValidInput(input));
+    public void processInput_shouldGoToReturnMenu_WhenInputIs2() {
+        menu.processInput("2");
+        assertEquals(AppState.RETURN_MENU, BibliotecaApp.currentState);
+    }
 
-        input = "4";
-        assertEquals(false, menu.isValidInput(input));
+    @Test
+    public void processInput_shouldQuit_WhenInputIs3() {
+        menu.processInput("3");
+        assertEquals(AppState.QUIT, BibliotecaApp.currentState);
+    }
+
+    @Test
+    public void isValidInput_shouldReturnTrue_GivenValidInput() {
+        String input = "1";
+        assertTrue(menu.isValidInput(input));
+    }
+
+    @Test
+    public void isValidInput_shouldReturnFalse_GivenInputWithTooHighNumber() {
+        String input = "4";
+        assertFalse(menu.isValidInput(input));
+    }
+
+    @Test
+    public void isValidInput_shouldReturnFalse_GivenInputNull() {
+        String input = null;
+        assertFalse(menu.isValidInput(input));
+    }
+
+    @Test
+    public void isValidInput_shouldReturnFalse_GivenInputEmpty() {
+        String input = "";
+        assertFalse(menu.isValidInput(input));
+    }
+
+    @Test
+    public void isValidInput_shouldReturnFalse_GivenInputNotNumeric() {
+        String input = "xzy";
+        assertFalse(menu.isValidInput(input));
     }
 }

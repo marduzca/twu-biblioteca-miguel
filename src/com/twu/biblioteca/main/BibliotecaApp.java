@@ -9,7 +9,6 @@ import com.twu.biblioteca.util.AppState;
 
 public class BibliotecaApp {
 
-    private boolean RUN;
     public static AppState currentState;
 
     private MainMenu mainMenu;
@@ -48,7 +47,7 @@ public class BibliotecaApp {
                     break;
 
                 case BOOK_MENU:
-                    Console.output("Book List:\n" + bibApp.bookManager.showListOfBooksWithExtraInfo() + "\n" + (BookManager.bookList.size() + 1) + ". Back\nSelect the book that you want to checkout by number");
+                    Console.output("Book List:\n" + bibApp.bookManager.showListOfBooks() + "\n" + (BookManager.availableBooks.size() + 1) + ". Back\nSelect the book that you want to checkout by number");
                     bibApp.bookCheckout.processInput(Console.getUserInput());
                     break;
 

@@ -5,23 +5,24 @@ import com.twu.biblioteca.userInterface.Console;
 import com.twu.biblioteca.util.AppState;
 
 public class Checkout {
+
     public void processInput(String userInput) {
         while(!isValidInput(userInput)) {
             Console.output("Please select a valid option!");
             userInput = Console.getUserInput();
         }
 
-        if(Integer.valueOf(userInput) == (BookManager.bookList.size() + 1)) {
+        if(Integer.valueOf(userInput) == (BookManager.availableBooks.size() + 1)) {
             BibliotecaApp.currentState = AppState.MAIN_MENU;
         }
         else {
-            Console.output(checkoutBook(BookManager.bookList.get((Integer.valueOf(userInput)) - 1).getId()));
+            Console.output(checkoutBook(BookManager.availableBooks.get((Integer.valueOf(userInput)) - 1).getId()));
         }
     }
 
     public boolean isValidInput(String input) {
         try {
-            if (Integer.parseInt(input) > (BookManager.bookList.size() + 1)) {
+            if (Integer.parseInt(input) > (BookManager.availableBooks.size() + 1)) {
                 return false;
             }
         }
