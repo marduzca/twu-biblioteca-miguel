@@ -1,6 +1,8 @@
 package com.twu.biblioteca.main;
 
+import com.twu.biblioteca.books.BookManager;
 import com.twu.biblioteca.books.Checkout;
+import com.twu.biblioteca.books.Return;
 import com.twu.biblioteca.menu.MainMenu;
 import com.twu.biblioteca.userInterface.Console;
 import com.twu.biblioteca.util.AppState;
@@ -12,11 +14,15 @@ public class BibliotecaApp {
 
     private MainMenu mainMenu;
     private Checkout bookCheckout;
+    private Return bookReturn;
+    private BookManager bookManager;
 
     public BibliotecaApp() {
         this.currentState = AppState.INIT;
         this.bookCheckout = new Checkout();
         this.mainMenu = new MainMenu();
+        this.bookReturn = new Return();
+        this.bookManager = new BookManager();
     }
 
     public static void main(String[] args) {
@@ -42,17 +48,17 @@ public class BibliotecaApp {
                     break;
 
                 case BOOK_MENU:
-                    Console.output("Book List:\n" + bibApp.bookCheckout.showListOfBooksWithExtraInfo() + "\n" + (bibApp.bookCheckout.books.size() + 1) + ". Back\nSelect the book that you want to checkout by number");
+                    Console.output("Book List:\n" + bibApp.bookManager.showListOfBooksWithExtraInfo() + "\n" + (BookManager.bookList.size() + 1) + ". Back\nSelect the book that you want to checkout by number");
                     bibApp.bookCheckout.processInput(Console.getUserInput());
                     break;
 
                 case RETURN_MENU:
-                    Console.output("Return a book by entering its ID");
-
+                    Console.output("Return a book by entering its ID:");
+                    bibApp.bookReturn.processInput(Console.getUserInput());
                     break;
 
                 default:
-                    //How to deal with this?
+                    //TODO: How to deal with this?
                     break;
             }
         }

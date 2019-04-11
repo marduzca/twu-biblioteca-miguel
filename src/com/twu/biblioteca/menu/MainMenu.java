@@ -1,11 +1,11 @@
 package com.twu.biblioteca.menu;
 
-        import com.twu.biblioteca.main.BibliotecaApp;
-        import com.twu.biblioteca.userInterface.Console;
-        import com.twu.biblioteca.util.AppState;
+import com.twu.biblioteca.main.BibliotecaApp;
+import com.twu.biblioteca.userInterface.Console;
+import com.twu.biblioteca.util.AppState;
 
-        import java.util.ArrayList;
-        import java.util.List;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainMenu {
 
@@ -14,6 +14,7 @@ public class MainMenu {
     public MainMenu() {
         optionsList = new ArrayList<>();
         optionsList.add(AppState.BOOK_MENU);
+        optionsList.add(AppState.RETURN_MENU);
         optionsList.add(AppState.QUIT);
     }
 

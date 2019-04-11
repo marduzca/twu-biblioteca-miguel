@@ -16,7 +16,7 @@ public class MainMenuTest {
 
     @Test
     public void showMainMenuOptions() {
-        assertEquals("1. List of books", menu.showMainMenu());
+        assertEquals("1. List of bookList", menu.showMainMenu());
     }
 
     @Test
