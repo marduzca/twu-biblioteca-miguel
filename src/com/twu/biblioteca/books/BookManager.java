@@ -19,13 +19,13 @@ public class BookManager {
     public String showListOfBooks() {
         updateAvailableBooksList();
 
-        StringBuffer bookListWithExtraInfoAsText = new StringBuffer();
+        StringBuffer bookListAsText = new StringBuffer();
 
         for(int i = 0; i < availableBooks.size(); i++) {
-            bookListWithExtraInfoAsText.append((i+1) + ". " + availableBooks.get(i).getTitle() + " | " + availableBooks.get(i).getAuthor() + " | " + availableBooks.get(i).getYear() + "\n");
+            bookListAsText.append((i+1) + ". " + availableBooks.get(i).getTitle() + " | " + availableBooks.get(i).getAuthor() + " | " + availableBooks.get(i).getYear() + "\n");
         }
 
-        return bookListWithExtraInfoAsText.toString().trim();
+        return bookListAsText.toString().trim();
     }
 
     private void updateAvailableBooksList() {

@@ -1,27 +1,30 @@
 package com.twu.biblioteca.main;
 
 import com.twu.biblioteca.books.BookManager;
-import com.twu.biblioteca.books.Checkout;
-import com.twu.biblioteca.books.Return;
+import com.twu.biblioteca.books.BookCheckout;
+import com.twu.biblioteca.books.BookReturn;
 import com.twu.biblioteca.menu.MainMenu;
 import com.twu.biblioteca.userInterface.Console;
 import com.twu.biblioteca.util.AppState;
+import com.twu.biblioteca.videos.VideoManager;
 
 public class BibliotecaApp {
 
     public static AppState currentState;
 
     private MainMenu mainMenu;
-    private Checkout bookCheckout;
-    private Return bookReturn;
+    private BookCheckout bookCheckout;
+    private BookReturn bookReturn;
     private BookManager bookManager;
+    private VideoManager videoManager;
 
     public BibliotecaApp() {
         this.currentState = AppState.INIT;
-        this.bookCheckout = new Checkout();
+        this.bookCheckout = new BookCheckout();
         this.mainMenu = new MainMenu();
-        this.bookReturn = new Return();
+        this.bookReturn = new BookReturn();
         this.bookManager = new BookManager();
+        this.videoManager = new VideoManager();
     }
 
     public static void main(String[] args) {
@@ -46,14 +49,18 @@ public class BibliotecaApp {
                     bibApp.mainMenu.processInput(Console.getUserInput());
                     break;
 
-                case BOOK_MENU:
+                case CHEKOUT_BOOK_MENU:
                     Console.output("Book List:\n" + bibApp.bookManager.showListOfBooks() + "\n" + (BookManager.availableBooks.size() + 1) + ". Back\nSelect the book that you want to checkout by number");
                     bibApp.bookCheckout.processInput(Console.getUserInput());
                     break;
 
-                case RETURN_MENU:
-                    Console.output("Return a book by entering its ID:");
+                case RETURN_BOOK_MENU:
+                    Console.output("BookReturn a book by entering its ID (You find the ID on the back of the book):");
                     bibApp.bookReturn.processInput(Console.getUserInput());
+                    break;
+
+                case CHEKOUT_VIDEO_MENU:
+                    Console.output("Video List:\n" + bibApp.videoManager.showListOfVideos() + "\n" + (VideoManager.availableVideos.size() + 1) + ". Back\nSelect the video that you want to checkout by number");
                     break;
 
                 default:

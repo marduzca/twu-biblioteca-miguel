@@ -13,8 +13,9 @@ public class MainMenu {
 
     public MainMenu() {
         optionsList = new ArrayList<>();
-        optionsList.add(AppState.BOOK_MENU);
-        optionsList.add(AppState.RETURN_MENU);
+        optionsList.add(AppState.CHEKOUT_BOOK_MENU);
+        optionsList.add(AppState.RETURN_BOOK_MENU);
+        optionsList.add(AppState.CHEKOUT_VIDEO_MENU);
         optionsList.add(AppState.QUIT);
     }
 

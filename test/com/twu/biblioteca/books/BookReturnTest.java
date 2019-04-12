@@ -7,14 +7,14 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class ReturnTest {
+public class BookReturnTest {
 
-    private Return bookReturn;
+    private BookReturn bookReturn;
     private BookManager bookManager;
 
     @Before
     public void initialize()  {
-        bookReturn = new Return();
+        bookReturn = new BookReturn();
         bookManager = new BookManager();
     }
 

@@ -4,7 +4,7 @@ import com.twu.biblioteca.main.BibliotecaApp;
 import com.twu.biblioteca.userInterface.Console;
 import com.twu.biblioteca.util.AppState;
 
-public class Return {
+public class BookReturn {
     public void processInput(String userInput) {
         while(!isValidInput(userInput)) {
             Console.output("That is not a valid book to return");

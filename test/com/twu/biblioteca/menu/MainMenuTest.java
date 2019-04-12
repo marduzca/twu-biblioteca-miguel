@@ -19,13 +19,13 @@ public class MainMenuTest {
     @Test
     public void processInput_shouldGoToRentMenu_WhenInputIs1() {
         menu.processInput("1");
-        assertEquals(AppState.BOOK_MENU, BibliotecaApp.currentState);
+        assertEquals(AppState.CHEKOUT_BOOK_MENU, BibliotecaApp.currentState);
     }
 
     @Test
     public void processInput_shouldGoToReturnMenu_WhenInputIs2() {
         menu.processInput("2");
-        assertEquals(AppState.RETURN_MENU, BibliotecaApp.currentState);
+        assertEquals(AppState.RETURN_BOOK_MENU, BibliotecaApp.currentState);
     }
 
     @Test

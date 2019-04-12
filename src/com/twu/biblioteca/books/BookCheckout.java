@@ -4,7 +4,7 @@ import com.twu.biblioteca.main.BibliotecaApp;
 import com.twu.biblioteca.userInterface.Console;
 import com.twu.biblioteca.util.AppState;
 
-public class Checkout {
+public class BookCheckout {
 
     public void processInput(String userInput) {
         while(!isValidInput(userInput)) {

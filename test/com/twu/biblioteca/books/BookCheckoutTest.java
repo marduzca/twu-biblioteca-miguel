@@ -7,14 +7,14 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class CheckoutTest {
+public class BookCheckoutTest {
 
-    private Checkout bList;
+    private BookCheckout bList;
     private BookManager bookManager;
 
     @Before
     public void initialize () {
-        bList = new Checkout();
+        bList = new BookCheckout();
         bookManager = new BookManager();
     }
 
