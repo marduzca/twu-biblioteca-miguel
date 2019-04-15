@@ -8,6 +8,7 @@ public enum AppState {
     CHEKOUT_BOOK_MENU("Rent a book"),
     RETURN_BOOK_MENU("Return a book"),
     CHEKOUT_VIDEO_MENU("Rent a video"),
+    ACCOUNT_INFO("Account information"),
     QUIT("Quit");
 
     private String text;

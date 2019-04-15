@@ -2,14 +2,14 @@ package com.twu.biblioteca.main;
 
 import com.twu.biblioteca.accounts.Account;
 import com.twu.biblioteca.accounts.LoginManager;
-import com.twu.biblioteca.books.BookManager;
-import com.twu.biblioteca.books.BookCheckout;
-import com.twu.biblioteca.books.BookReturn;
+import com.twu.biblioteca.media.books.BookManager;
+import com.twu.biblioteca.media.books.BookCheckout;
+import com.twu.biblioteca.media.books.BookReturn;
 import com.twu.biblioteca.menu.MainMenu;
 import com.twu.biblioteca.userInterface.Console;
 import com.twu.biblioteca.util.AppState;
-import com.twu.biblioteca.videos.VideoCheckout;
-import com.twu.biblioteca.videos.VideoManager;
+import com.twu.biblioteca.media.videos.VideoCheckout;
+import com.twu.biblioteca.media.videos.VideoManager;
 
 public class BibliotecaApp {
 
@@ -23,16 +23,16 @@ public class BibliotecaApp {
     private VideoCheckout videoCheckout;
     private LoginManager loginManager;
     private Console console;
-    private Account currentAccount;
+    public Account currentAccount;
 
     public BibliotecaApp() {
         this.currentState = AppState.INIT;
-        this.bookCheckout = new BookCheckout();
+        this.bookCheckout = new BookCheckout(this);
         this.mainMenu = new MainMenu();
-        this.bookReturn = new BookReturn();
+        this.bookReturn = new BookReturn(this);
         this.bookManager = new BookManager();
         this.videoManager = new VideoManager();
-        this.videoCheckout = new VideoCheckout();
+        this.videoCheckout = new VideoCheckout(this);
         this.loginManager = new LoginManager();
         this.console = new Console();
     }
@@ -55,7 +55,7 @@ public class BibliotecaApp {
                     break;
 
                 case LOGIN_USER:
-                    Console.output(AppState.LOGIN_USER.getText() + "\nEnter your library ID in xxx-xxxx format.\nLibrary ID: ");
+                    Console.output(AppState.LOGIN_USER.getText() + ":\nEnter your library ID in xxx-xxxx format.\nLibrary ID: ");
                     String libraryID = Console.getLoginInput();
                     bibApp.currentAccount = bibApp.loginManager.processInput(libraryID.trim());
                     bibApp.changeStateTo(AppState.LOGIN_PWD);
@@ -72,7 +72,7 @@ public class BibliotecaApp {
                     break;
 
                 case MAIN_MENU:
-                    Console.outputln("Main Menu:\n" + bibApp.mainMenu.showMainMenu() + "\nSelect the options by number");
+                    Console.outputln(AppState.MAIN_MENU.getText() + ":\n" + bibApp.mainMenu.showMainMenu() + "\nSelect the options by number");
                     bibApp.mainMenu.processInput(Console.getUserInput());
                     break;
 
@@ -89,6 +89,14 @@ public class BibliotecaApp {
                 case CHEKOUT_VIDEO_MENU:
                     Console.outputln("Video List:\n" + bibApp.videoManager.showListOfVideos() + "\n" + (VideoManager.getAvailableVideos().size() + 1) + ". Back\nSelect the video that you want to checkout by number");
                     bibApp.videoCheckout.processInput(Console.getUserInput());
+                    break;
+
+                case ACCOUNT_INFO:
+                    Console.output("Account Information:");
+                    Console.outputln(bibApp.currentAccount.toString());
+                    Console.outputln("Press Enter to go back");
+                    Console.getUserInput();
+                    bibApp.changeStateTo(AppState.MAIN_MENU);
                     break;
 
                 default:

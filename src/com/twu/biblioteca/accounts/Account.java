@@ -1,7 +1,7 @@
 package com.twu.biblioteca.accounts;
 
-import com.twu.biblioteca.books.Book;
-import com.twu.biblioteca.videos.Video;
+import com.twu.biblioteca.media.books.Book;
+import com.twu.biblioteca.media.videos.Video;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,11 +39,28 @@ public class Account {
         return password;
     }
 
-    public List<Book> getRentedBooksList() {
-        return rentedBooksList;
+    public void assignRentedBook(Book rentedBook) {
+        rentedBooksList.add(rentedBook);
     }
 
-    public List<Video> getRentedVideosList() {
-        return rentedVideosList;
+    public void unassignReturnedBook(Book returnedBook) {
+        rentedBooksList.remove(returnedBook);
+    }
+
+    public void assignRentedVideo(Video rentedVideo) {
+        rentedVideosList.add(rentedVideo);
+    }
+
+    @Override
+    public String toString(){
+        StringBuffer info = new StringBuffer();
+        info.append("Library ID: " + getLibraryID());
+        info.append("\nName: " + accountOwner.getName());
+        info.append("\nEmail: " + accountOwner.getEmail());
+        info.append("\nMobile: " + accountOwner.getPhoneNumber());
+        info.append("\nRented books: " + (rentedBooksList.size() > 0 ? rentedBooksList.toString() : "No books rented at the moment"));
+        info.append("\nRented videos: " + (rentedVideosList.size() > 0 ? rentedVideosList.toString() : "No videos rented at the moment"));
+
+        return info.toString();
     }
 }

@@ -16,6 +16,7 @@ public class MainMenu {
         optionsList.add(AppState.CHEKOUT_BOOK_MENU);
         optionsList.add(AppState.RETURN_BOOK_MENU);
         optionsList.add(AppState.CHEKOUT_VIDEO_MENU);
+        optionsList.add(AppState.ACCOUNT_INFO);
         optionsList.add(AppState.QUIT);
     }
 
