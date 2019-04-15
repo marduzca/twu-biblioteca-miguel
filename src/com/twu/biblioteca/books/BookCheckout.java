@@ -8,21 +8,22 @@ public class BookCheckout {
 
     public void processInput(String userInput) {
         while(!isValidInput(userInput)) {
-            Console.output("Please select a valid option!");
+            Console.outputln("Please select a valid option!");
             userInput = Console.getUserInput();
         }
 
-        if(Integer.valueOf(userInput) == (BookManager.availableBooks.size() + 1)) {
+        if(Integer.valueOf(userInput) == (BookManager.getAvailableBooks().size() + 1)) {
             BibliotecaApp.currentState = AppState.MAIN_MENU;
         }
         else {
-            Console.output(checkoutBook(BookManager.availableBooks.get((Integer.valueOf(userInput)) - 1).getId()));
+            Console.outputln(checkoutBook(BookManager.getAvailableBooks().get((Integer.valueOf(userInput)) - 1).getId()));
         }
     }
 
     public boolean isValidInput(String input) {
         try {
-            if (Integer.parseInt(input) > (BookManager.availableBooks.size() + 1)) {
+            int inputInt = Integer.parseInt(input);
+            if (inputInt > (BookManager.getAvailableBooks().size() + 1) || inputInt < 1) {
                 return false;
             }
         }
@@ -34,19 +35,15 @@ public class BookCheckout {
     }
 
     public String checkoutBook(int id) {
-        for(Book b : BookManager.bookList) {
+        for(Book b : BookManager.getAvailableBooks()) {
             if(b.getId() == id) {
-                if(b.isAvailable()) {
                     b.setAvailability(false);
+                    BookManager.updateAvailableBooksList();
                     BibliotecaApp.currentState = AppState.MAIN_MENU;
-                    return "Thank you! Enjoy the book";
-                }
-                else if(!b.isAvailable()) {
-                    return "Sorry, that book is not available";
-                }
+                    return "You just rented the book with ID " + id + "\nThank you! Enjoy the book";
             }
         }
 
-        return "ID nonexistent";
+        return "Sorry, that book is not available";
     }
 }

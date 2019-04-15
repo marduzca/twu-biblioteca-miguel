@@ -7,8 +7,8 @@ import java.util.List;
 
 public class VideoManager {
 
-    public static List<Video> videoList = new ArrayList<>();
-    public static List<Video> availableVideos;
+    private static List<Video> videoList = new ArrayList<>();
+    private static List<Video> availableVideos;
 
     public VideoManager(){
         videoList.add(new Video(101, "Titanic", 1997, "James Cameron", 8));
@@ -32,7 +32,7 @@ public class VideoManager {
         return videoListAsText.toString().trim();
     }
 
-    private void updateAvailableVideosList() {
+    public static void updateAvailableVideosList() {
         for(Video v : videoList) {
             if(!v.isAvailable() && availableVideos.contains(v)) {
                 availableVideos.remove(v);
@@ -41,5 +41,13 @@ public class VideoManager {
                 availableVideos.add(v);
             }
         }
+    }
+
+    public static List<Video> getVideoList() {
+        return videoList;
+    }
+
+    public static List<Video> getAvailableVideos() {
+        return availableVideos;
     }
 }

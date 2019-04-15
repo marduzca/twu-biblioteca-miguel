@@ -31,7 +31,7 @@ public class MainMenu {
 
     public void processInput(String userInput) {
         while(!isValidInput(userInput)) {
-            Console.output("Please select a valid option!");
+            Console.outputln("Please select a valid option!");
             userInput = Console.getUserInput();
         }
 

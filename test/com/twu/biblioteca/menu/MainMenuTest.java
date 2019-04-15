@@ -29,8 +29,14 @@ public class MainMenuTest {
     }
 
     @Test
-    public void processInput_shouldQuit_WhenInputIs3() {
+    public void processInput_shouldGoToRentVideoMenu_WhenInputIs3() {
         menu.processInput("3");
+        assertEquals(AppState.CHEKOUT_VIDEO_MENU, BibliotecaApp.currentState);
+    }
+
+    @Test
+    public void processInput_shouldQuit_WhenInputIs4() {
+        menu.processInput("4");
         assertEquals(AppState.QUIT, BibliotecaApp.currentState);
     }
 
@@ -42,7 +48,7 @@ public class MainMenuTest {
 
     @Test
     public void isValidInput_shouldReturnFalse_GivenInputWithTooHighNumber() {
-        String input = "4";
+        String input = "7";
         assertFalse(menu.isValidInput(input));
     }
 

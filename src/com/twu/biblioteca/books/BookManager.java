@@ -5,8 +5,8 @@ import java.util.List;
 
 public class BookManager {
 
-    public static List<Book> bookList = new ArrayList<>();
-    public static List<Book> availableBooks;
+    private static List<Book> bookList = new ArrayList<>();
+    private static List<Book> availableBooks;
 
     public BookManager(){
         bookList.add(new Book(101, "Sherlock Holmes", "Arthur Conan Doyle", 1887));
@@ -28,7 +28,7 @@ public class BookManager {
         return bookListAsText.toString().trim();
     }
 
-    private void updateAvailableBooksList() {
+    public static void updateAvailableBooksList() {
         for(Book b : bookList) {
             if(!b.isAvailable() && availableBooks.contains(b)) {
                 availableBooks.remove(b);
@@ -37,5 +37,13 @@ public class BookManager {
                 availableBooks.add(b);
             }
         }
+    }
+
+    public static List<Book> getBookList() {
+        return bookList;
+    }
+
+    public static List<Book> getAvailableBooks() {
+        return availableBooks;
     }
 }

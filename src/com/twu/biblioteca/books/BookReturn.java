@@ -7,11 +7,11 @@ import com.twu.biblioteca.util.AppState;
 public class BookReturn {
     public void processInput(String userInput) {
         while(!isValidInput(userInput)) {
-            Console.output("That is not a valid book to return");
+            Console.outputln("That is not a valid book to return");
             userInput = Console.getUserInput();
         }
 
-        Console.output(returnBook(Integer.valueOf(userInput)));
+        Console.outputln(returnBook(Integer.valueOf(userInput)));
     }
 
     public boolean isValidInput(String input) {
@@ -26,7 +26,7 @@ public class BookReturn {
     }
 
     public String returnBook(int id) {
-        for(Book b : BookManager.bookList) {
+        for(Book b : BookManager.getBookList()) {
             if(b.getId() == id) {
                 if(!b.isAvailable()) {
                     b.setAvailability(true);

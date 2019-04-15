@@ -20,7 +20,7 @@ public class BookReturnTest {
 
     @Test
     public void returnBookTest_shouldGoBackToMainMenu_WhenReturnSuccessful() {
-        BookManager.bookList.get(0).setAvailability(false);
+        BookManager.getBookList().get(0).setAvailability(false);
         bookReturn.returnBook(101);
 
         assertEquals(AppState.MAIN_MENU, BibliotecaApp.currentState);
@@ -28,15 +28,15 @@ public class BookReturnTest {
 
     @Test
     public void returnBookTest_shouldBeAvailable_WhenReturnSuccessful(){
-        BookManager.bookList.get(0).setAvailability(false);
+        BookManager.getBookList().get(0).setAvailability(false);
         bookReturn.returnBook(101);
 
-        assertTrue(BookManager.bookList.get(0).isAvailable());
+        assertTrue(BookManager.getBookList().get(0).isAvailable());
     }
 
     @Test
     public void returnBookTest_shouldShowSuccessMsg_WhenIdIsCorrect(){
-        BookManager.bookList.get(0).setAvailability(false);
+        BookManager.getBookList().get(0).setAvailability(false);
         assertEquals("Thank you for returning the book", bookReturn.returnBook(101));    }
 
     @Test
