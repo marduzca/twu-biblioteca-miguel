@@ -1,5 +1,6 @@
 package com.twu.biblioteca.accounts;
 
+import com.twu.biblioteca.main.BibliotecaApp;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -7,11 +8,13 @@ import static org.junit.Assert.*;
 
 public class LoginManagerTest {
 
+    private BibliotecaApp bibApp;
     private LoginManager loginManager;
 
     @Before
     public void initialize() {
-        loginManager = new LoginManager();
+        bibApp = new BibliotecaApp();
+        loginManager = new LoginManager(bibApp.console);
     }
 
     @Test

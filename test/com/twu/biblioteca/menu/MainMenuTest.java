@@ -9,35 +9,34 @@ import static org.junit.Assert.*;
 
 public class MainMenuTest {
 
+    private BibliotecaApp bibApp;
     private MainMenu menu;
 
     @Before
     public void initialize() {
-        menu = new MainMenu();
+        bibApp = new BibliotecaApp();
+        menu = new MainMenu(bibApp.console);
     }
 
     @Test
     public void processInput_shouldGoToRentMenu_WhenInputIs1() {
-        menu.processInput("1");
-        assertEquals(AppState.CHEKOUT_BOOK_MENU, BibliotecaApp.currentState);
+        assertEquals(AppState.CHEKOUT_BOOK_MENU, menu.processInput("1"));
     }
 
     @Test
     public void processInput_shouldGoToReturnMenu_WhenInputIs2() {
-        menu.processInput("2");
-        assertEquals(AppState.RETURN_BOOK_MENU, BibliotecaApp.currentState);
+
+        assertEquals(AppState.RETURN_BOOK_MENU, menu.processInput("2"));
     }
 
     @Test
     public void processInput_shouldGoToRentVideoMenu_WhenInputIs3() {
-        menu.processInput("3");
-        assertEquals(AppState.CHEKOUT_VIDEO_MENU, BibliotecaApp.currentState);
+        assertEquals(AppState.CHEKOUT_VIDEO_MENU, menu.processInput("3"));
     }
 
     @Test
     public void processInput_shouldQuit_WhenInputIs4() {
-        menu.processInput("4");
-        assertEquals(AppState.QUIT, BibliotecaApp.currentState);
+        assertEquals(AppState.QUIT, menu.processInput("5"));
     }
 
     @Test

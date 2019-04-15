@@ -7,18 +7,22 @@ import com.twu.biblioteca.util.AppState;
 public class BookReturn {
 
     private BibliotecaApp bibApp;
+    private BookManager bookManager;
+    private Console console;
 
-    public BookReturn(BibliotecaApp bibApp) {
+    public BookReturn(BibliotecaApp bibApp, BookManager bookManager, Console console) {
         this.bibApp = bibApp;
+        this.bookManager = bookManager;
+        this.console = console;
     }
 
-    public void processInput(String userInput) {
+    public AppState processInput(String userInput) {
         while(!isValidInput(userInput)) {
-            Console.outputln("That is not a valid book to return");
-            userInput = Console.getUserInput();
+            console.outputln("That is not a valid book to return");
+            userInput = console.getUserInput();
         }
 
-        Console.outputln(returnBook(Integer.valueOf(userInput)));
+        return returnBook(Integer.valueOf(userInput));
     }
 
     public boolean isValidInput(String input) {
@@ -32,21 +36,23 @@ public class BookReturn {
         return true;
     }
 
-    public String returnBook(int id) {
-        for(Book b : BookManager.getBookList()) {
+    public AppState returnBook(int id) {
+        for(Book b : bookManager.getBookList()) {
             if(b.getId() == id) {
                 if(!b.isAvailable()) {
                     b.setAvailability(true);
                     bibApp.currentAccount.unassignReturnedBook(b);
-                    BibliotecaApp.currentState = AppState.MAIN_MENU;
-                    return "Thank you for returning the book";
+                    console.outputln("Thank you for returning the book");
+                    return AppState.MAIN_MENU;
                 }
                 else if(b.isAvailable()) {
-                    return "That is not a valid book to return";
+                    console.outputln("That is not a valid book to return");
+                    return AppState.RETURN_BOOK_MENU;
                 }
             }
         }
 
-        return "That is not a valid book to return";
+        console.outputln("That is not a valid book to return");
+        return AppState.RETURN_BOOK_MENU;
     }
 }

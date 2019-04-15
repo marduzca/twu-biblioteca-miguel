@@ -21,7 +21,7 @@ public class VideoManagerTest {
 
     @Test
     public void updateAvailableVideosListTest_ShouldContainOnlyAvailableVideos() {
-        for(Video v : VideoManager.getAvailableVideos()) {
+        for(Video v : videoManager.getAvailableVideos()) {
             assertEquals(true, v.isAvailable());
         }
     }

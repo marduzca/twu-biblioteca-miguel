@@ -7,29 +7,33 @@ import com.twu.biblioteca.util.AppState;
 public class BookCheckout {
 
     private BibliotecaApp bibApp;
+    private BookManager bookManager;
+    private Console console;
 
-    public BookCheckout(BibliotecaApp bibApp) {
+    public BookCheckout(BibliotecaApp bibApp, BookManager bookManager, Console console) {
         this.bibApp = bibApp;
+        this.bookManager = bookManager;
+        this.console = console;
     }
 
-    public void processInput(String userInput) {
+    public AppState processInput(String userInput) {
         while(!isValidInput(userInput)) {
-            Console.outputln("Please select a valid option!");
-            userInput = Console.getUserInput();
+            console.outputln("Please select a valid option!");
+            userInput = console.getUserInput();
         }
 
-        if(Integer.valueOf(userInput) == (BookManager.getAvailableBooks().size() + 1)) {
-            BibliotecaApp.currentState = AppState.MAIN_MENU;
+        if(Integer.valueOf(userInput) == (bookManager.getAvailableBooks().size() + 1)) {
+            return AppState.MAIN_MENU;
         }
         else {
-            Console.outputln(checkoutBook(BookManager.getAvailableBooks().get((Integer.valueOf(userInput)) - 1).getId()));
+            return checkoutBook(bookManager.getAvailableBooks().get((Integer.valueOf(userInput)) - 1).getId());
         }
     }
 
-    public boolean isValidInput(String input) {
+    private boolean isValidInput(String input) {
         try {
             int inputInt = Integer.parseInt(input);
-            if (inputInt > (BookManager.getAvailableBooks().size() + 1) || inputInt < 1) {
+            if (inputInt > (bookManager.getAvailableBooks().size() + 1) || inputInt < 1) {
                 return false;
             }
         }
@@ -40,17 +44,18 @@ public class BookCheckout {
         return true;
     }
 
-    public String checkoutBook(int id) {
-        for(Book b : BookManager.getAvailableBooks()) {
+    public AppState checkoutBook(int id) {
+        for(Book b : bookManager.getAvailableBooks()) {
             if(b.getId() == id) {
                     b.setAvailability(false);
-                    BookManager.updateAvailableBooksList();
+                    bookManager.updateAvailableBooksList();
                     bibApp.currentAccount.assignRentedBook(b);
-                    BibliotecaApp.currentState = AppState.MAIN_MENU;
-                    return "You just rented the book with ID " + id + "\nThank you! Enjoy the book";
+                    console.outputln("You just rented the book with ID " + id + "\nThank you! Enjoy the book");
+                    return AppState.MAIN_MENU;
             }
         }
 
-        return "Sorry, that book is not available";
+        console.outputln("Sorry, that book is not available");
+        return AppState.CHEKOUT_BOOK_MENU;
     }
 }

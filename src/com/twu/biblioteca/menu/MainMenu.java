@@ -10,8 +10,10 @@ import java.util.List;
 public class MainMenu {
 
     private List<AppState> optionsList;
+    private Console console;
 
-    public MainMenu() {
+    public MainMenu(Console console) {
+        this.console = console;
         optionsList = new ArrayList<>();
         optionsList.add(AppState.CHEKOUT_BOOK_MENU);
         optionsList.add(AppState.RETURN_BOOK_MENU);
@@ -30,13 +32,13 @@ public class MainMenu {
         return optionsListAsText.toString().trim();
     }
 
-    public void processInput(String userInput) {
+    public AppState processInput(String userInput) {
         while(!isValidInput(userInput)) {
-            Console.outputln("Please select a valid option!");
-            userInput = Console.getUserInput();
+            console.outputln("Please select a valid option!");
+            userInput = console.getUserInput();
         }
 
-        BibliotecaApp.currentState = optionsList.get(Integer.valueOf(userInput) - 1);
+        return optionsList.get(Integer.valueOf(userInput) - 1);
     }
 
     public boolean isValidInput(String input) {

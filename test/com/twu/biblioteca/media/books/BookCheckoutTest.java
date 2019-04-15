@@ -1,5 +1,6 @@
 package com.twu.biblioteca.media.books;
 
+import com.twu.biblioteca.accounts.LoginManager;
 import com.twu.biblioteca.main.BibliotecaApp;
 import com.twu.biblioteca.util.AppState;
 import org.junit.BeforeClass;
@@ -12,43 +13,39 @@ public class BookCheckoutTest {
     private static BibliotecaApp bibApp;
     private static BookCheckout bList;
     private static BookManager bookManager;
+    private static LoginManager loginManager;
 
     @BeforeClass
     public static void initialize () {
         bibApp = new BibliotecaApp();
-        bList = new BookCheckout(bibApp);
+        loginManager = new LoginManager(bibApp.console);
+        bibApp.currentAccount = loginManager.getAccountsList().get(0);
         bookManager = new BookManager();
+        bList = new BookCheckout(bibApp, bookManager, bibApp.console);
     }
 
     @Test
-    public void checkoutBookTest_shouldReturnErrorMsg_WhenBookIsNotAvailable() {
-        BookManager.getBookList().get(0).setAvailability(false);
-        BookManager.updateAvailableBooksList();
+    public void checkoutBookTest_shouldStayInCheckoutBookMenu_WhenBookIsNotAvailable() {
+        bookManager.getBookList().get(0).setAvailability(false);
+        bookManager.updateAvailableBooksList();
 
-        assertEquals("Sorry, that book is not available", bList.checkoutBook(101));
+        assertEquals(AppState.CHEKOUT_BOOK_MENU, bList.checkoutBook(101));
     }
 
     @Test
     public void checkoutBookTest_shouldBeUnavailable_WhenCheckoutSuccessful() {
-        BookManager.getBookList().get(0).setAvailability(true);
-        BookManager.updateAvailableBooksList();
+        bookManager.getBookList().get(0).setAvailability(true);
+        bookManager.updateAvailableBooksList();
         bList.checkoutBook(101);
 
-        assertEquals(false, BookManager.getBookList().get(0).isAvailable());
+        assertEquals(false, bookManager.getBookList().get(0).isAvailable());
     }
 
     @Test
-    public void checkoutBookTest_shouldGoBackToMainMenu_WhenCheckoutSuccessful() {
-        BookManager.getBookList().get(0).setAvailability(true);
-        bList.checkoutBook(101);
+    public void checkoutBookTest_shouldGoBackToMainMenu_WhenBookIsAvailable() {
+        bookManager.getBookList().get(0).setAvailability(true);
+        bookManager.updateAvailableBooksList();
 
-        assertEquals(AppState.MAIN_MENU, BibliotecaApp.currentState);
-    }
-
-    @Test
-    public void checkoutBookTest_shouldReturnSuccessMsg_WhenBookIsAvailable() {
-        BookManager.getBookList().get(0).setAvailability(true);
-        BookManager.updateAvailableBooksList();
-        assertEquals("Thank you! Enjoy the book", bList.checkoutBook(101));
+        assertEquals(AppState.MAIN_MENU, bList.checkoutBook(101));
     }
 }

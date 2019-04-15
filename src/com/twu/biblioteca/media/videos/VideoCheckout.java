@@ -7,29 +7,33 @@ import com.twu.biblioteca.util.AppState;
 public class VideoCheckout {
 
     private BibliotecaApp bibApp;
+    private VideoManager videoManager;
+    private Console console;
 
-    public VideoCheckout(BibliotecaApp bibApp) {
+    public VideoCheckout(BibliotecaApp bibApp, VideoManager videoManager, Console console) {
         this.bibApp = bibApp;
+        this.videoManager = videoManager;
+        this.console = console;
     }
 
-    public void processInput(String userInput) {
+    public AppState processInput(String userInput) {
         while(!isValidInput(userInput)) {
-            Console.outputln("Please select a valid option!");
-            userInput = Console.getUserInput();
+            console.outputln("Please select a valid option!");
+            userInput = console.getUserInput();
         }
 
-        if(Integer.valueOf(userInput) == (VideoManager.getAvailableVideos().size() + 1)) {
-            BibliotecaApp.currentState = AppState.MAIN_MENU;
+        if(Integer.valueOf(userInput) == (videoManager.getAvailableVideos().size() + 1)) {
+            return AppState.MAIN_MENU;
         }
         else {
-            Console.outputln(checkoutVideo(VideoManager.getAvailableVideos().get((Integer.valueOf(userInput)) - 1).getId()));
+            return checkoutVideo(videoManager.getAvailableVideos().get((Integer.valueOf(userInput)) - 1).getId());
         }
     }
 
     public boolean isValidInput(String input) {
         try {
             int inputInt = Integer.parseInt(input);
-            if (inputInt > (VideoManager.getAvailableVideos().size() + 1) || inputInt < 1) {
+            if (inputInt > (videoManager.getAvailableVideos().size() + 1) || inputInt < 1) {
                 return false;
             }
         }
@@ -40,17 +44,18 @@ public class VideoCheckout {
         return true;
     }
 
-    public String checkoutVideo(int id) {
-        for(Video v : VideoManager.getAvailableVideos()) {
+    public AppState checkoutVideo(int id) {
+        for(Video v : videoManager.getAvailableVideos()) {
             if(v.getId() == id) {
                 v.setAvailability(false);
-                VideoManager.updateAvailableVideosList();
+                videoManager.updateAvailableVideosList();
                 bibApp.currentAccount.assignRentedVideo(v);
-                BibliotecaApp.currentState = AppState.MAIN_MENU;
-                return "You just rented the video with ID " + id + "\nThank you! Enjoy it";
+                console.outputln("You just rented the video with ID " + id + "\nThank you! Enjoy it");
+                return AppState.MAIN_MENU;
             }
         }
 
-        return "Sorry, that video is not available";
+        console.outputln("Sorry, that video is not available");
+        return AppState.CHEKOUT_VIDEO_MENU;
     }
 }

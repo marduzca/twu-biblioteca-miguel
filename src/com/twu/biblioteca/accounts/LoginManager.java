@@ -10,8 +10,10 @@ import java.util.List;
 public class LoginManager {
 
     private List<Account> accountsList = new ArrayList<>();
+    private Console console;
 
-    public LoginManager() {
+    public LoginManager(Console console) {
+        this.console = console;
         accountsList.add(new Account(new User("Kermit The Frog", "kermit99@muppet.com",690562845l), "001-ADMI", "admin".toCharArray()));
         accountsList.add(new Account(new User("Annie Sue Pig", "mspiggie@muppet.com",012022501140l), "002-TWOO", "bacon".toCharArray()));
         accountsList.add(new Account(new User("Fozzie Bear", "fozzie@muppet.com",70693146l), "003-JOKE", "password".toCharArray()));
@@ -23,9 +25,9 @@ public class LoginManager {
 
     public Account processInput(String userInput) {
         while(!isValidInput(userInput)) {
-            Console.outputln("That is not a valid library ID");
-            Console.output(AppState.LOGIN_USER.getText() + "\nEnter your library ID in xxx-xxxx format.\nLibrary ID: ");
-            userInput = Console.getUserInput();
+            console.outputln("That is not a valid library ID");
+            console.output(AppState.LOGIN_USER.getText() + "\nEnter your library ID in xxx-xxxx format.\nLibrary ID: ");
+            userInput = console.getUserInput();
         }
 
         return assignAccount(userInput);
@@ -67,7 +69,7 @@ public class LoginManager {
         Account currentAccount = assignAccount(libraryID);
 
         if(Arrays.equals(currentAccount.getPassword(), userPassword)) {
-            Console.outputln("Welcome back to your Biblioteca, " + currentAccount.getAccountOwner().getName() + "!");
+            console.outputln("Welcome back to your Biblioteca, " + currentAccount.getAccountOwner().getName() + "!");
             return true;
         }
 

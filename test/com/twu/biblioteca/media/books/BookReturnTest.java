@@ -1,5 +1,6 @@
 package com.twu.biblioteca.media.books;
 
+import com.twu.biblioteca.accounts.LoginManager;
 import com.twu.biblioteca.main.BibliotecaApp;
 import com.twu.biblioteca.util.AppState;
 import org.junit.Before;
@@ -12,42 +13,38 @@ public class BookReturnTest {
     private BibliotecaApp bibApp;
     private BookReturn bookReturn;
     private BookManager bookManager;
+    private LoginManager loginManager;
 
     @Before
     public void initialize()  {
         bibApp = new BibliotecaApp();
-        bookReturn = new BookReturn(bibApp);
+        loginManager = new LoginManager(bibApp.console);
+        bibApp.currentAccount = loginManager.getAccountsList().get(0);
         bookManager = new BookManager();
-    }
-
-    @Test
-    public void returnBookTest_shouldGoBackToMainMenu_WhenReturnSuccessful() {
-        BookManager.getBookList().get(0).setAvailability(false);
-        bookReturn.returnBook(101);
-
-        assertEquals(AppState.MAIN_MENU, BibliotecaApp.currentState);
+        bookReturn = new BookReturn(bibApp, bookManager, bibApp.console);
     }
 
     @Test
     public void returnBookTest_shouldBeAvailable_WhenReturnSuccessful(){
-        BookManager.getBookList().get(0).setAvailability(false);
+        bookManager.getBookList().get(0).setAvailability(false);
         bookReturn.returnBook(101);
 
-        assertTrue(BookManager.getBookList().get(0).isAvailable());
+        assertTrue(bookManager.getBookList().get(0).isAvailable());
     }
 
     @Test
-    public void returnBookTest_shouldShowSuccessMsg_WhenIdIsCorrect(){
-        BookManager.getBookList().get(0).setAvailability(false);
-        assertEquals("Thank you for returning the book", bookReturn.returnBook(101));    }
+    public void returnBookTest_shouldGoBackToMainMenu_WhenReturnSuccessful(){
+        bookManager.getBookList().get(0).setAvailability(false);
+
+        assertEquals(AppState.MAIN_MENU, bookReturn.returnBook(101));    }
 
     @Test
-    public void returnBookTest_shouldShowErrorMsg_WhenIdIsInvalid(){
-        assertEquals("That is not a valid book to return", bookReturn.returnBook(101));
+    public void returnBookTest_shouldStayInReturnBookMenu_WhenIdIsInvalid(){
+            assertEquals(AppState.RETURN_BOOK_MENU, bookReturn.returnBook(101));
     }
 
     @Test
-    public void returnBookTest_shouldShowErrorMsg_WhenInputIdNotExistent(){
-        assertEquals("That is not a valid book to return", bookReturn.returnBook(0));
+    public void returnBookTest_shouldStayInReturnBookMenu_WhenInputIdNotExistent(){
+        assertEquals(AppState.RETURN_BOOK_MENU, bookReturn.returnBook(0));
     }
 }
