@@ -1,4 +1,5 @@
-#Biblioteca App TW (Miguel)
+# Biblioteca App TW (Miguel)
+## Small practice project for ThoughtWorks University
 
 To use, just run the BiblotecaApp main method.
 
